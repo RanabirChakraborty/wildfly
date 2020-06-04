@@ -594,4 +594,11 @@ public interface NamingLogger extends BasicLogger {
 
     @Message(id = 65, value = "Could not load module %s - the module or one of its dependencies is missing [%s]")
     OperationFailedException moduleNotFound(ModuleIdentifier moduleID, String missingModule);
+
+    @LogMessage(level = ERROR)
+    @Message(id = 66, value = "Failed to obtain IIOP view value for entry %s.")
+    void failedToLookupIIOPViewValue(String entry, @Cause Throwable cause);
+
+    @Message(id = 67, value = "Jndi view is only available in runtime mode.")
+    String IIOPViewNotAvailable();
 }

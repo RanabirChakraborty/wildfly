@@ -22,6 +22,11 @@
 
 package org.jboss.as.naming.subsystem;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.EnumSet;
+import java.util.List;
+
 import org.jboss.as.controller.AttributeDefinition;
 import org.jboss.as.controller.OperationContext;
 import org.jboss.as.controller.OperationFailedException;
@@ -46,53 +51,61 @@ import org.jboss.dmr.ModelNode;
 import org.jboss.dmr.ModelType;
 import org.jboss.msc.service.ServiceController;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.EnumSet;
-import java.util.List;
-
 /**
  * A {@link org.jboss.as.controller.ResourceDefinition} for JNDI bindings
  */
 public class NamingBindingResourceDefinition extends SimpleResourceDefinition {
 
-    static final NamingBindingResourceDefinition INSTANCE = new NamingBindingResourceDefinition();
+    public static final NamingBindingResourceDefinition INSTANCE = new NamingBindingResourceDefinition();
 
     static final SimpleAttributeDefinition BINDING_TYPE = new SimpleAttributeDefinitionBuilder(NamingSubsystemModel.BINDING_TYPE, ModelType.STRING, false)
             .setFlags(AttributeAccess.Flag.RESTART_RESOURCE_SERVICES)
             .setValidator(EnumValidator.create(BindingType.class, false, false))
             .build();
 
-    static final SimpleAttributeDefinition VALUE = new SimpleAttributeDefinitionBuilder(NamingSubsystemModel.VALUE, ModelType.STRING, true)
+    public static final SimpleAttributeDefinition VALUE = new SimpleAttributeDefinitionBuilder(
+            NamingSubsystemModel.VALUE, ModelType.STRING,
+            true)
             .setAllowExpression(true)
             .setFlags(AttributeAccess.Flag.RESTART_RESOURCE_SERVICES)
             .build();
 
-    static final SimpleAttributeDefinition TYPE = new SimpleAttributeDefinitionBuilder(NamingSubsystemModel.TYPE, ModelType.STRING, true)
+    public static final SimpleAttributeDefinition TYPE = new SimpleAttributeDefinitionBuilder(NamingSubsystemModel.TYPE,
+            ModelType.STRING,
+            true)
             .setAllowExpression(true)
             .setFlags(AttributeAccess.Flag.RESTART_RESOURCE_SERVICES)
             .build();
 
-    static final SimpleAttributeDefinition CLASS = new SimpleAttributeDefinitionBuilder(NamingSubsystemModel.CLASS, ModelType.STRING, true)
+    public static final SimpleAttributeDefinition CLASS = new SimpleAttributeDefinitionBuilder(
+            NamingSubsystemModel.CLASS, ModelType.STRING,
+            true)
             .setAllowExpression(true)
             .setFlags(AttributeAccess.Flag.RESTART_RESOURCE_SERVICES)
             .build();
 
-    static final SimpleAttributeDefinition MODULE = new SimpleAttributeDefinitionBuilder(NamingSubsystemModel.MODULE, ModelType.STRING, true)
+    public static final SimpleAttributeDefinition MODULE = new SimpleAttributeDefinitionBuilder(
+            NamingSubsystemModel.MODULE, ModelType.STRING,
+            true)
             .setAllowExpression(true)
             .setFlags(AttributeAccess.Flag.RESTART_RESOURCE_SERVICES)
             .build();
 
-    static final SimpleAttributeDefinition LOOKUP = new SimpleAttributeDefinitionBuilder(NamingSubsystemModel.LOOKUP, ModelType.STRING, true)
+    public static final SimpleAttributeDefinition LOOKUP = new SimpleAttributeDefinitionBuilder(
+            NamingSubsystemModel.LOOKUP, ModelType.STRING,
+            true)
             .setAllowExpression(true)
             .setFlags(AttributeAccess.Flag.RESTART_RESOURCE_SERVICES)
             .build();
 
-    static final PropertiesAttributeDefinition ENVIRONMENT = new PropertiesAttributeDefinition.Builder(NamingSubsystemModel.ENVIRONMENT, true)
+    public static final PropertiesAttributeDefinition ENVIRONMENT = new PropertiesAttributeDefinition.Builder(
+            NamingSubsystemModel.ENVIRONMENT, true)
             .setAllowExpression(true)
             .build();
 
-    static final SimpleAttributeDefinition CACHE = new SimpleAttributeDefinitionBuilder(NamingSubsystemModel.CACHE, ModelType.BOOLEAN, true)
+    public static final SimpleAttributeDefinition CACHE = new SimpleAttributeDefinitionBuilder(
+            NamingSubsystemModel.CACHE, ModelType.BOOLEAN,
+            true)
             .setAllowExpression(true)
             .setFlags(AttributeAccess.Flag.RESTART_RESOURCE_SERVICES)
             .build();
