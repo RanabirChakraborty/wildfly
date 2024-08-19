@@ -1,6 +1,10 @@
 #!/bin/bash
 
-DIFF=$(git diff origin/main...HEAD || true)
+# Determine the base branch for the PR using GITHUB_BASE_REF
+BASE_BRANCH="${GITHUB_BASE_REF:-main}"
+echo "Comparing against base branch: $BASE_BRANCH"
+# Fetch the PR diff against the correct base branch
+DIFF=$(git diff origin/"$BASE_BRANCH"...HEAD || true)
 
 if [ -z "$DIFF" ]; then
   echo "No diff found to analyze."
@@ -35,7 +39,7 @@ while IFS= read -r line; do
 
   if [[ "$line" =~ ^\+[^+] ]]; then
     # Ignore lines in the test directories
-    if [[ "$CURRENT_FILE" != *"src/test/"* && "$CURRENT_FILE" != *"testsuite/"* && "$CURRENT_FILE" != *"check_logging.sh"* ]]; then
+    if [[ "$CURRENT_FILE" != *"src/test/"* && "$CURRENT_FILE" != *"testsuite/"* ]]; then
       # Check for any of the patterns, ensuring "//" doesn't precede them
       for pattern in "${PATTERNS[@]}"; do
         if [[ "$line" == *"$pattern"* ]]; then
