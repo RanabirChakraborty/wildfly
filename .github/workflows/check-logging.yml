@@ -1,0 +1,24 @@
+name: Check non-i18n logging
+
+on:
+  push:
+    branches:
+      - 'test-2'
+
+jobs:
+  check-logging:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Print GitHub context
+        run: echo "${{ toJson(github) }}"
+
+      - name: Run logging check
+        env:
+          GITHUB_BASE_REF: '${{ github.ref }}'
+        shell: bash
+        run: bash check_logging.sh
